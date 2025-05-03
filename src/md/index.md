@@ -1,3 +1,0 @@
-# Test jekyll
-
-Test

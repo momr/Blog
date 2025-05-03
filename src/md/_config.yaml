@@ -1,6 +1,0 @@
-# Everything under md_src/ becomes /md/ on the live site
-baseurl: "/md"
-permalink: pretty
-
-# Tell Jekyll where to write HTML
-destination: ../docs/md # supported config key :contentReference[oaicite:1]{index=1}

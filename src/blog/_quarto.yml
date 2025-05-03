@@ -1,6 +1,6 @@
 project:
   type: website
-  output-dir: docs/blog
+  output-dir: ../../docs/blog
 
 website:
   title: "1-my-blog"
@@ -11,6 +11,7 @@ website:
         href: https://github.com/
       - icon: twitter
         href: https://twitter.com
+
 format:
   html:
     theme:

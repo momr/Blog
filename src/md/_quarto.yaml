@@ -1,0 +1,10 @@
+project:
+  type: docusaurus # must be declared
+  output-dir: ../docusaurus/docs
+
+execute:
+  freeze: auto
+
+format:
+  docusaurus-md:
+    code-fold: true

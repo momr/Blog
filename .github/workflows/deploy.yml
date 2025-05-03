@@ -43,8 +43,17 @@ jobs:
         run: rsync -a --delete src/docusaurus/build/ docs/md
 
       # -------- Optional extras --------
-      - run: marimo convert src/nb --out docs/nb || true
-      - run: ./build_shiny_wasm.sh && cp -r shiny_build docs/app || true
+      - name: Export Marimo notebooks to WASM HTML
+        run: |
+          mkdir -p docs/nb
+          find src/nb -maxdepth 1 -name '*.py' -print0 | \
+            xargs -0 -I{} bash -c '
+              nb="$1"
+              name="${nb##*/}"; name="${name%.py}"   # strip path & .py
+              out="docs/nb/$name"
+              mkdir -p "$out"
+              marimo -y export html-wasm "$nb" -o "$out" --mode edit
+            ' _ {}
 
       # -------- Package for Pages --------
       - run: touch docs/.nojekyll

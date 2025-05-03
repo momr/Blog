@@ -16,39 +16,33 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # ---------- Quarto ----------
+      # -------- Quarto blog (/blog) --------
       - uses: quarto-dev/quarto-actions/setup@v2
-      - name: Render Quarto blog
-        run: quarto render posts --output-dir docs/blog
+      - run: quarto render src/blog # _quarto.yml handles output‑dir
 
-      # ---------- Jekyll ----------
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: "3.2"
-          bundler-cache: true
-      - run: gem install jekyll
-      - name: Build Jekyll docs
-        run: jekyll build --source md_src --destination docs/md
+      # -------- Quarto → Docusaurus (/md) --------
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - name: Install JS deps
+        run: |
+          cd docusaurus
+          npm ci                                # or pnpm/yarn
+      - name: Render Quarto docs
+        run: quarto render src/md # writes to docusaurus/docs
+      - name: Build Docusaurus site
+        run: |
+          cd docusaurus
+          npm run build                        # outputs to docusaurus/build
+          rsync -a --delete build/ ../docs/md
 
-      # ---------- Optional extras ----------
-      #   - name: Build marimo → docs/nb
-      #     if: ${{ github.ref == 'refs/heads/main' }}
-      #     run: marimo convert nb_src --out docs/nb # adjust as needed
+      # -------- Optional extras --------
+      - run: marimo convert src/nb --out docs/nb || true
+      - run: ./build_shiny_wasm.sh && cp -r shiny_build docs/app || true
 
-      #   - name: Build Shiny WASM → docs/app
-      #     if: ${{ github.ref == 'refs/heads/main' }}
-      #     run: |
-      #       ./build_shiny_wasm.sh                      # your script
-      #       cp -r shiny_build docs/app
-
-      # ---------- Finalise ----------
-      - name: Disable on‑server Jekyll
-        run: touch docs/.nojekyll
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v4 # v4 avoids 2025 deprecation :contentReference[oaicite:2]{index=2}
-        with:
-          path: docs
+      # -------- Package for Pages --------
+      - run: touch docs/.nojekyll
+      - uses: actions/upload-pages-artifact@v4 # v4 is required by deploy v4 :contentReference[oaicite:1]{index=1}
+        with: { path: docs }
 
   deploy:
     needs: build

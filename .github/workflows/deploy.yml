@@ -43,6 +43,15 @@ jobs:
         run: rsync -a --delete src/docusaurus/build/ docs/md
 
       # -------- Optional extras --------
+      - uses: actions/setup-python@v5              # grab CPython from GitHub cache
+        with:
+          python-version: "3.12"
+
+      - uses: astral-sh/setup-uv@v5                # install uv (fast package manager)
+
+      - name: Install Python deps via uv
+        run: uv pip install --system -r requirements.txt   # installs marimo & friends
+
       - name: Export Marimo notebooks to WASM HTML
         run: |
           mkdir -p docs/nb

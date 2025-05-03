@@ -8,3 +8,4 @@ execute:
 format:
   docusaurus-md:
     code-fold: true
+    link-external-newwindow: false

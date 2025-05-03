@@ -8,10 +8,11 @@ const config: Config = {
 
   themeConfig: {
     colorMode: {
-      defaultMode: 'dark',
+      defaultMode: "dark",
+      respectPrefersColorScheme: true,
     },
   },
-  
+
   themes: [
     // keep any existing themes here …
     [

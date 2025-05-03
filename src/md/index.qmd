@@ -5,3 +5,8 @@ sidebar_position: 1
 ---
 
 [my blog](https://momr.github.io/Blog/blog/)
+
+[marimo example](https://momr.github.io/Blog/nb/marimo_example)
+[state estimation](https://momr.github.io/Blog/nb/state_estimation_bug_blog)
+
+

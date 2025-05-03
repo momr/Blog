@@ -6,6 +6,14 @@ const config: Config = {
   baseUrl: "/Blog/md/",
   trailingSlash: false,
 
+  themeConfig: {
+    colorMode: {
+      // show the user’s OS/browser preference first …
+      respectPrefersColorScheme: true,
+      },
+    },
+  },
+  
   themes: [
     // keep any existing themes here …
     [

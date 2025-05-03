@@ -10,7 +10,6 @@ const config: Config = {
     colorMode: {
       // show the user’s OS/browser preference first …
       respectPrefersColorScheme: true,
-      },
     },
   },
   

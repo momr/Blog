@@ -1,0 +1,61 @@
+name: build-and-deploy
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write # required for official Pages deploy action
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # ---------- Quarto ----------
+      - uses: quarto-dev/quarto-actions/setup@v2
+      - name: Render Quarto blog
+        run: quarto render posts --output-dir docs/blog
+
+      # ---------- Jekyll ----------
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+          bundler-cache: true
+      - run: gem install jekyll
+      - name: Build Jekyll docs
+        run: jekyll build --source md_src --destination docs/md
+
+      # ---------- Optional extras ----------
+      #   - name: Build marimo → docs/nb
+      #     if: ${{ github.ref == 'refs/heads/main' }}
+      #     run: marimo convert nb_src --out docs/nb # adjust as needed
+
+      #   - name: Build Shiny WASM → docs/app
+      #     if: ${{ github.ref == 'refs/heads/main' }}
+      #     run: |
+      #       ./build_shiny_wasm.sh                      # your script
+      #       cp -r shiny_build docs/app
+
+      # ---------- Finalise ----------
+      - name: Disable on‑server Jekyll
+        run: touch docs/.nojekyll
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4 # v4 avoids 2025 deprecation :contentReference[oaicite:2]{index=2}
+        with:
+          path: docs
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4 # official deploy action :contentReference[oaicite:3]{index=3}

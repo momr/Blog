@@ -1,3 +1,5 @@
+import rehypeExternalLinks from 'rehype-external-links';
+
 import type { Config } from "@docusaurus/types";
 
 const config: Config = {
@@ -36,6 +38,9 @@ const config: Config = {
           path: "docs", // Quarto writes here
           routeBasePath: "/", // so URLs are /md/<page>
           sidebarPath: require.resolve("./sidebars.ts"), // or sidebars as needed
+          rehypePlugins: [
+            [rehypeExternalLinks, {target: '_self', rel: []}],
+          ],
         },
         blog: false, // “docs‑only” mode
       },

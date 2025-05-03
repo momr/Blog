@@ -8,8 +8,7 @@ const config: Config = {
 
   themeConfig: {
     colorMode: {
-      // show the user’s OS/browser preference first …
-      respectPrefersColorScheme: true,
+      defaultMode: 'dark',
     },
   },
   

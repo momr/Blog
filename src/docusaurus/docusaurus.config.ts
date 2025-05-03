@@ -3,7 +3,7 @@ import type { Config } from "@docusaurus/types";
 const config: Config = {
   title: "My Docs",
   url: "https://username.github.io",
-  baseUrl: "/md/",
+  baseUrl: "/Blog/md/",
   trailingSlash: false,
 
   themes: [

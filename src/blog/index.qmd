@@ -1,14 +1,39 @@
 ---
-title: "1-my-blog"
+title: "Medhat Omr"
+sidebar: false
+toc: true
 listing:
   contents: posts
   sort: "date desc"
-  type: default
-  categories: true
+  type: table
+  fields: [date, title]
+  categories: false
   sort-ui: false
-  filter-ui: false
+  filter-ui: true
+  id: blog-listings
+
+
 page-layout: full
 title-block-banner: true
+format:
+  html:
+    anchor-sections: true
 ---
 
 
+::: {layout="[21,79]" .profile-header}
+
+![](profile.jpeg){.profile-pic}
+
+I am a Senior Software Engineer specializing in autonomous drilling optimization, machine learning-driven analytics, and advanced state estimation techniques. Over the past two years at SLB, I’ve contributed to projects that bridge complex drilling workflows with cutting-edge ML models, Bayesian filtering algorithms, and robust data engineering pipelines. My work spans from designing and integrating different Steering modes for drilling automation to implementing custom particle filters in C# for improved yield estimation under challenging non-linear, noisy conditions. 
+:::
+
+## 💼 Work With Me
+
+
+## 📮 Feed
+
+::: {#blog-listings}
+:::
+
+## 📬 Follow Me

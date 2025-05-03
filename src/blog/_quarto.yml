@@ -3,18 +3,34 @@ project:
   output-dir: ../../docs/blog
 
 website:
-  title: "1-my-blog"
+  title: "Medhat Omr"
   navbar:
-    right:
-      - about.qmd
-      - icon: github
-        href: https://github.com/
-      - icon: twitter
-        href: https://twitter.com
+    title: false
+    background: dark
+    pinned: true
+    collapse: false
+    left:
+      #  🏠 📮 👨🏽‍💻 🍎 🎤 📚
+      - text: "Blog"
+        href: index.qmd
+    # - text: Notes
+    #   file: notes/index.qmd
+    # - text: Hire Me
+    #   href: https://parlance-labs.com/
+    # - text: OSS
+    #   file: oss/opensource.qmd
+    # - text: Teaching
+    #   file: talks.qmd
+    #   target: _blank
 
 format:
   html:
+    respect-user-color-scheme: true
     theme:
-      - cosmo
-      - brand
+      dark:
+        - darkly
+        - brand
+      light:
+        - flatly # built‑in BS theme
+        - brand # ← magically expands to _brand.yml
     css: styles.css

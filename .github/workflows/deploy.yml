@@ -23,17 +23,24 @@ jobs:
       # -------- Quarto → Docusaurus (/md) --------
       - uses: actions/setup-node@v4
         with: { node-version: 20 }
+     
+      # 1 – Install site dependencies
       - name: Install JS deps
-        run: |
-          cd docusaurus
-          npm ci                                # or pnpm/yarn
+        working-directory: src/docusaurus          # <‑‑ updated
+        run: npm ci
+      
+      # 2 – Render Quarto docs into Docusaurus’ docs folder
       - name: Render Quarto docs
-        run: quarto render src/md # writes to docusaurus/docs
+        run: quarto render src/md                  # writes markdown into src/docusaurus/docs
+      
+      # 3 – Build the Docusaurus site
       - name: Build Docusaurus site
-        run: |
-          cd docusaurus
-          npm run build                        # outputs to docusaurus/build
-          rsync -a --delete build/ ../docs/md
+        working-directory: src/docusaurus          # <‑‑ updated
+        run: npm run build                         # output → src/docusaurus/build
+      
+      # 4 – Copy the static HTML into the Pages bundle
+      - name: Stage built docs
+        run: rsync -a --delete src/docusaurus/build/ docs/md
 
       # -------- Optional extras --------
       - run: marimo convert src/nb --out docs/nb || true

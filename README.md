@@ -171,6 +171,10 @@ cd docusaurus && npm start   # hot‑reloads docs at http://localhost:3000/md
 # or
 quarto preview src/blog # to serve it locally
 cd docusaurus && npm run serve # to serve and test search functionality
+
+# for marimo and shinylive after building the static websites
+python -m http.server --directory docs/nb 8000
+python -m http.server --directory docs/app --bind localhost 8008
 ```
 
 ## References
@@ -182,6 +186,6 @@ cd docusaurus && npm run serve # to serve and test search functionality
 - <https://posit-dev.github.io/brand-yml/>
 - <https://github.com/facebook/docusaurus>
 - <https://docs.marimo.io/guides/wasm/>
+  - <https://docs.marimo.io/guides/exporting/>
 - <https://shiny.posit.co/py/get-started/shinylive.html>
-  - <https://github.com/posit-dev/shinylive?tab=readme-ov-file>
-  - <https://github.com/RamiKrispin/shinylive?tab=readme-ov-file>
+  - <https://github.com/posit-dev/shinylive>
